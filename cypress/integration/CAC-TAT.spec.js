@@ -1,5 +1,6 @@
 /// <reference types="Cypress" />
 
+
 const longText = 'Lorem ipsum dolor sit amet. Um este este é este personalizado é este este. sonalizado personalizado um personalizado texto.'
 describe('Central de atendimento CAC-TAT', () => {
     beforeEach(() => {
@@ -8,6 +9,7 @@ describe('Central de atendimento CAC-TAT', () => {
     });
     it('verifica o título da aplicação', function () {
         cy.title().should('eq', 'Central de Atendimento ao Cliente TAT')
+        cy.wait(500)
 
     });
 
@@ -16,7 +18,8 @@ describe('Central de atendimento CAC-TAT', () => {
         cy.get('input#lastName').click().type('Lima')
         cy.get('input#email').click().type('Danilo.lima@outlo.com')
         cy.get('textarea').click().type(longText,{delay:10})
-        cy.get('button[type="submit"]').click()
+        //cy.get('button[type="submit"]').click()
+        cy.contains('button[type="submit"]','Enviar').click()
         cy.get('.success').should('be.visible')
     });
     it('Exibe mensagem de erro ao submeter o formulário com um email com formatação inválida', () => {
@@ -25,7 +28,8 @@ describe('Central de atendimento CAC-TAT', () => {
         cy.get('input#lastName').click().type('Lima')
         cy.get('input#email').click().type('Danilo.limoutlo.com')
         cy.get('textarea').click().type(longText,{delay:10})
-        cy.get('button[type="submit"]').click()
+        //cy.get('button[type="submit"]').click()
+        cy.contains('button[type="submit"]','Enviar').click()
         cy.get('.error').should('be.visible')
     });
     it('Verifica telefone vazio', () => {
@@ -38,7 +42,8 @@ describe('Central de atendimento CAC-TAT', () => {
         cy.get('input#lastName').click().type('Lima')
         cy.get('input#email').click().type('Danilo.lima@outlo.com')
         cy.get('textarea').click().type(longText,{delay:10})
-        cy.get('button[type="submit"]').click()
+        //cy.get('button[type="submit"]').click()
+        cy.contains('button[type="submit"]','Enviar').click()
         cy.get('.error').should('be.visible')
     });
 
@@ -54,5 +59,10 @@ describe('Central de atendimento CAC-TAT', () => {
         cy.get('.error').should('be.visible')
 
     })
+    it('Envia o formuário com sucesso usando um comando customizado', () => {
+       cy.fillMandatoryFieldsAndSubmit()
+       cy.get('.success').should('be.visible')
+    });
+   
 
 });
