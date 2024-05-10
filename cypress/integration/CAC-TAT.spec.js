@@ -1,7 +1,6 @@
 /// <reference types="Cypress" />
 
-
-const longText = 'Lorem ipsum dolor sit amet. Um este este é este personalizado é este este. sonalizado personalizado um personalizado texto.'
+const longText = 'Lorem ipsum dolor sit amet.'
 describe('Central de atendimento CAC-TAT', () => {
     beforeEach(() => {
         cy.visit('./src/index.html')
@@ -17,7 +16,7 @@ describe('Central de atendimento CAC-TAT', () => {
         cy.get('input#firstName').click().type('Danilo')
         cy.get('input#lastName').click().type('Lima')
         cy.get('input#email').click().type('Danilo.lima@outlo.com')
-        cy.get('textarea').click().type(longText,{delay:10})
+        cy.get('textarea').click().type(longText,{delay:5})
         //cy.get('button[type="submit"]').click()
         cy.contains('button[type="submit"]','Enviar').click()
         cy.get('.success').should('be.visible')
@@ -27,7 +26,7 @@ describe('Central de atendimento CAC-TAT', () => {
         cy.get('input#firstName').click().type('Danilo')
         cy.get('input#lastName').click().type('Lima')
         cy.get('input#email').click().type('Danilo.limoutlo.com')
-        cy.get('textarea').click().type(longText,{delay:10})
+        cy.get('textarea').click().type(longText,{delay:5})
         //cy.get('button[type="submit"]').click()
         cy.contains('button[type="submit"]','Enviar').click()
         cy.get('.error').should('be.visible')
@@ -62,7 +61,22 @@ describe('Central de atendimento CAC-TAT', () => {
     it('Envia o formuário com sucesso usando um comando customizado', () => {
        cy.fillMandatoryFieldsAndSubmit()
        cy.get('.success').should('be.visible')
+       
     });
-   
+    it('seleciona um produto (YouTube) por seu texto', () => {
+        cy.get('select#product').select('YouTube').should('have.value','youtube')
+    });
+    
+    it('seleciona um produto (Mentoria) por seu valor (value)', () => {
+        cy.get('select').select('mentoria').should('have.value','mentoria')
+    });
 
+   
+    it('seleciona um produto (Blog) por seu índice', () => {
+        cy.get('select').select(1).should('have.value','blog')
+    });
+
+    it.only('radio', () => {
+        cy.get('input[type="radio"]').first().check().should('be.checked')
+    });
 });
