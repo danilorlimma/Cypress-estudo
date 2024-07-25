@@ -83,7 +83,7 @@ describe('Central de atendimento CAC-TAT', () => {
        })
     });
 
-    it.only('marca cada elemento do radio com each() e wrap()', () => {
+    it('marca cada elemento do radio com each() e wrap()', () => {
         cy.get('input[type="radio"]')
             .each(function($radio){
              cy.wrap($radio).check().should('be.checked')
